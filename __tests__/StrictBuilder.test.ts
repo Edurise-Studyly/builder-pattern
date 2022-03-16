@@ -1,4 +1,4 @@
-import { StrictBuilder } from '../';
+import { StrictBuilder } from '../src/index';
 
 interface Testing {
   a: number;
