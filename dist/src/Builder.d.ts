@@ -1,7 +1,7 @@
 export declare type IBuilder<T> = {
-    [k in keyof T]-?: (arg: T[k]) => IBuilder<T>;
+  [k in keyof T]-?: (arg: T[k]) => IBuilder<T>;
 } & {
-    build(): T;
+  build(): T;
 };
 declare type Clazz<T> = new (...args: unknown[]) => T;
 /**
@@ -12,7 +12,10 @@ declare type Clazz<T> = new (...args: unknown[]) => T;
  * @param type the name of the class to instantiate.
  * @param template optional class partial which the builder will derive initial params from.
  */
-export declare function Builder<T>(type: Clazz<T>, template?: Partial<T>): IBuilder<T>;
+export declare function Builder<T>(
+  type: Clazz<T>,
+  template?: Partial<T>
+): IBuilder<T>;
 /**
  * Create a Builder for an interface. Returned objects will be untyped.
  *

@@ -1,7 +1,7 @@
 export declare type IStrictBuilder<T, B = Record<string, unknown>> = {
-    [k in keyof T]-?: (arg: T[k]) => IStrictBuilder<T, B & Record<k, T[k]>>;
+  [k in keyof T]-?: (arg: T[k]) => IStrictBuilder<T, B & Record<k, T[k]>>;
 } & {
-    build: B extends T ? () => T : never;
+  build: B extends T ? () => T : never;
 };
 /**
  * Create a StrictBuilder for an interface. Returned objects will be untyped.

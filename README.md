@@ -11,6 +11,7 @@ yarn add builder-pattern
 ## Usage
 
 ### Basic usage
+
 ```typescript
 interface UserInfo {
   id: number;
@@ -19,19 +20,20 @@ interface UserInfo {
 }
 
 const userInfo = Builder<UserInfo>()
-                   .id(1)
-                   .userName('foo')
-                   .email('foo@bar.baz')
-                   .build();
+  .id(1)
+  .userName("foo")
+  .email("foo@bar.baz")
+  .build();
 ```
+
 A note of caution: when building objects from scratch, the builder currently cannot ensure that all
 mandatory fields have been set. The built object might thus violate the contract of the given interface.
 For example, the following will compile (see also the example in the tests):
 
 ```typescript
-const brokenUserInfo = Builder<UserInfo>()
-                         .build();
+const brokenUserInfo = Builder<UserInfo>().build();
 ```
+
 A way around this is to use template objects, see next section.
 
 Another way is to use StrictBuilder.
@@ -44,17 +46,17 @@ This is especially useful for making test data setup more readable:
 ```typescript
 const defaultUserInfo: UserInfo = {
   id: 1,
-  userName: 'foo',
-  email: 'foo@bar.baz'
+  userName: "foo",
+  email: "foo@bar.baz",
 };
 
-const modifiedUserInfo = Builder(defaultUserInfo)
-                          .id(2)
-                          .build();
+const modifiedUserInfo = Builder(defaultUserInfo).id(2).build();
 ```
+
 Notes:
+
 - With this approach, if the template object conforms to the interface, the
-built object will, too.
+  built object will, too.
 - The builder will effectively create and modify a shallow copy of the template object.
 
 ### Usage with class object
@@ -68,12 +70,11 @@ class UserInfo {
   email!: string;
 }
 
-const userInfo = Builder(UserInfo)  // note that ( ) is used instead of < > here
-                   .id(1)
-                   .userName('foo')
-                   .email('foo@bar.baz')
-                   .build();
-
+const userInfo = Builder(UserInfo) // note that ( ) is used instead of < > here
+  .id(1)
+  .userName("foo")
+  .email("foo@bar.baz")
+  .build();
 ```
 
 Moreover, you can also specify a class object with a template object.
@@ -86,7 +87,7 @@ class UserInfo {
 }
 
 const userInfo = Builder(UserInfo, {id: 1, userName: 'foo'})
-                   .userName:('foo bar')
+                   .userName('foo bar')
                    .email('foo@bar.baz')
                    .build();
 
@@ -105,8 +106,8 @@ interface UserInfo {
 
 const userInfo = StrictBuilder<UserInfo>()
                    .id(1)
-                   .build(); \\ This expression is not callable.
-                             \\ Type 'never' has no call signatures.ts(2349)
+                   .build(); // This expression is not callable.
+                             // Type 'never' has no call signatures.ts(2349)
 ```
 
 All variables must be initialized before calling `build()`.
@@ -116,7 +117,7 @@ const userInfo = StrictBuilder<UserInfo>()
                    .id(1)
                    .userName('foo')
                    .email('foo@bar.baz')
-                   .build();  \\ build() is called successfully
+                   .build();  // build() is called successfully
 ```
 
 Notes:

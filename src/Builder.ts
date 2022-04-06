@@ -1,11 +1,10 @@
 export type IBuilder<T> = {
-  [k in keyof T]-?: (arg: T[k]) => IBuilder<T>
-}
-& {
+  [k in keyof T]-?: (arg: T[k]) => IBuilder<T>;
+} & {
   build(): T;
 };
 
-type Clazz<T> = new(...args: unknown[]) => T;
+type Clazz<T> = new (...args: unknown[]) => T;
 
 /**
  * Create a Builder for a class. Returned objects will be of the class type.
@@ -26,8 +25,10 @@ export function Builder<T>(type: Clazz<T>, template?: Partial<T>): IBuilder<T>;
  */
 export function Builder<T>(template?: Partial<T>): IBuilder<T>;
 
-export function Builder<T>(typeOrTemplate?: Clazz<T> | Partial<T>,
-                           template?: Partial<T>): IBuilder<T> {
+export function Builder<T>(
+  typeOrTemplate?: Clazz<T> | Partial<T>,
+  template?: Partial<T>
+): IBuilder<T> {
   let type: Clazz<T> | undefined;
   if (typeOrTemplate instanceof Function) {
     type = typeOrTemplate;
@@ -35,17 +36,19 @@ export function Builder<T>(typeOrTemplate?: Clazz<T> | Partial<T>,
     template = typeOrTemplate;
   }
 
-  const built: Record<string, unknown> = template ? Object.assign({}, template) : {};
+  const built: Record<string, unknown> = template
+    ? Object.assign({}, template)
+    : {};
 
   const builder = new Proxy(
     {},
     {
       get(target, prop) {
-        if ('build' === prop) {
+        if ("build" === prop) {
           if (type) {
             // A class name (identified by the constructor) was passed. Instantiate it with props.
             const obj: T = new type();
-            return () => Object.assign(obj, {...built});
+            return () => Object.assign(obj, { ...built });
           } else {
             // No type information - just return the object.
             return () => built;
@@ -56,7 +59,7 @@ export function Builder<T>(typeOrTemplate?: Clazz<T> | Partial<T>,
           built[prop.toString()] = x;
           return builder;
         };
-      }
+      },
     }
   );
 
