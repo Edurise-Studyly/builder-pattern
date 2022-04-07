@@ -86,11 +86,10 @@ class UserInfo {
   email!: string;
 }
 
-const userInfo = Builder(UserInfo, {id: 1, userName: 'foo'})
-                   .userName('foo bar')
-                   .email('foo@bar.baz')
-                   .build();
-
+const userInfo = Builder(UserInfo, { id: 1, userName: "foo" })
+  .userName("foo bar")
+  .email("foo@bar.baz")
+  .build();
 ```
 
 ### Usage with StrictBuilder
@@ -104,20 +103,18 @@ interface UserInfo {
   email: string;
 }
 
-const userInfo = StrictBuilder<UserInfo>()
-                   .id(1)
-                   .build(); // This expression is not callable.
-                             // Type 'never' has no call signatures.ts(2349)
+const userInfo = StrictBuilder<UserInfo>().id(1).build(); // This expression is not callable.
+// Type 'never' has no call signatures.ts(2349)
 ```
 
 All variables must be initialized before calling `build()`.
 
 ```typescript
 const userInfo = StrictBuilder<UserInfo>()
-                   .id(1)
-                   .userName('foo')
-                   .email('foo@bar.baz')
-                   .build();  // build() is called successfully
+  .id(1)
+  .userName("foo")
+  .email("foo@bar.baz")
+  .build(); // build() is called successfully
 ```
 
 Notes:
